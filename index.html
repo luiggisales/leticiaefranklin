@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leticia & Franklin - Lista de Presentes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Estilo adicional, se necessário */
+  </style>
+</head>
+<body>
+  <div class="flex flex-col h-screen bg-gray-100">
+    <header class="flex flex-col items-center justify-center p-4">
+      <div class="text-center mt-2">
+        <h2 class="text-4xl font-semibold libre-baskerville-regular">LETICIA</h2>
+        <h2 class="text-4xl font-semibold libre-baskerville-regular">&</h2>
+        <h2 class="text-4xl font-semibold libre-baskerville-regular">FRANKLIN</h2>
+        <p class="text-2xl mt-2 libre-baskerville-regular">14 | 12 | 2024</p>
+      </div>
+      <h1 class="text-lg font-bold uppercase libre-baskerville-regular mt-4">Lista de Presentes</h1>
+    </header>
+    
+    
+
+    <main class="flex-grow container mx-auto p-6">
+      <div id="presentes-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Presentes serão adicionados aqui dinamicamente pelo JavaScript -->
+      </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-4 text-center">
+      <p>© 2024 - Lista de Presentes de Casamento Leticia & Franklin</p>
+    </footer>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white rounded-lg p-6 w-11/12 max-w-md relative shadow-lg">
+      <h2 class="text-xl font-bold mb-4 flex justify-between items-center">
+        Presentei com o Pix
+        <button id="close-modal" class="text-red-600 hover:text-red-800 transition duration-200">
+          <i class="fas fa-times"></i> <!-- Ícone de fechar -->
+        </button>
+      </h2>
+      <p class="mb-4 text-gray-700">Para fazer um presente via Pix, basta copiar a chave PIX do casal e enviar o valor que desejar.</p>
+      <div class="flex items-center justify-between gap-4 mb-4">
+        <input
+          id="pix-key-input"
+          type="text"
+          value="leticiasales1405@gmail.com"
+          class="border rounded-l p-2 w-full cursor-not-allowed"
+          readonly
+        />
+        <button id="copy-pix-key" class="bg-green-600 text-white py-3 px-4 rounded-r hover:bg-green-700 transition duration-200 flex items-center">
+          <i id="copy-icon" class="fas fa-copy"></i> <!-- Ícone de copiar -->
+        </button>
+      </div>
+      <div class="w-full flex flex-1">
+        <span id="copy-status" class="text-green-600 hidden m-auto">Chave Pix cópiada com sucesso!!</span> <!-- Texto de confirmação -->
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    // Array de presentes
+    const presentes = [
+      {
+        nome: "Colher de pau",
+        image: "./images/colher-de-pau-10-pecas.jpg"
+      },
+      {
+        nome: "Caminho de mesa",
+        image: "./images/caminho-de-mesa.jpg"
+      },
+      {
+        nome: "Cesto para roupas",
+        image: "./images/cesto-para-roupas.jpg"
+      },
+      {
+        nome: "Jogo Toalha de Banho Azul - 4 Peças",
+        image: "./images/jogo_toalha_banho_azul_4_pecas.jpg"
+      },
+      {
+        nome: "Escorredor de Pratos Dobrável em Bambu",
+        image: "./images/escorredor_pratos_dobravel_bambu.jpg"
+      },
+      {
+        nome: "Jogo de acessórios para banheiro",
+        image: "./images/jogo-de-acessorios-para-banheiro-ceramica-8-pecas.jpg"
+      },
+      {
+        nome: "Jogo de Banho Buddemeyer",
+        image: "./images/33.jpg"
+      },
+      {
+        nome: "Jogo de copos - Tool Box",
+        image: "./images/MantaAbeilleMescla.png"
+      },
+      {
+        nome: "Conjunto de Panelas 10 Peças Tramontina",
+        image: "./images/23.jpg"
+      },
+      {
+        nome: "Aparelho de Fondue Forma Lugano",
+        image: "./images/27.jpg"
+      },
+      {
+        nome: "Aparelho de Jantar",
+        image: "./images/aparelho-de-jantar-42-pecas.jpg"
+      },
+      {
+        nome: "6 Facas para Carne Triple Rivet - Cuisinart",
+        image: "./images/6FacasparaCarneTriple.png"
+      },
+      {
+        nome: "Aparelho de jantar",
+        image: "./images/aparelho-de-jantar-em-porcelana-30-pecas.jpg"
+      },
+      {
+        nome: "Jogo Edredom Casal Cinza - 3 Peças",
+        image: "./images/jogo_edredom_cinza.jpg"
+      },
+      {
+        nome: "4 Panelas Mini Cocotte Botanique - Le Creuset",
+        image: "./images/4PanelasMini.png"
+      },
+      {
+        nome: "Jogo de Lençol 300 Fios - Trosseau",
+        image: "./images/JogodeLencol300.png"
+      },
+      {
+        nome: "Aparelho de Jantar Tânia Bulhões 18 Peças",
+        image: "./images/Aparelhojantarverde.png"
+      },
+      {
+        nome: "Batedeira Stand Mixer Kitchen Aid Candy Apple",
+        image: "./images/MLTBKED33A3AN.jpg"
+      }
+    ];
+
+    // Função para renderizar os presentes na página
+    function renderPresentes() {
+      const container = document.getElementById('presentes-container');
+      container.innerHTML = '';
+
+      presentes.forEach(presente => {
+        const item = document.createElement('div');
+        item.classList.add('bg-white', 'shadow-md', 'rounded-lg', 'p-4', 'text-center');
+
+        const img = document.createElement('img');
+        img.src = presente.image;
+        img.alt = presente.nome;
+        img.classList.add('w-full', 'h-auto', 'object-cover', 'rounded-md');
+        item.appendChild(img);
+
+        const nome = document.createElement('h2');
+        nome.textContent = presente.nome;
+        nome.classList.add('text-xl', 'font-bold', 'mt-4');
+        item.appendChild(nome);
+
+        const button = document.createElement('button');
+        button.textContent = "Adicionar ao carrinho";
+        button.classList.add('mt-4', 'bg-blue-600', 'text-white', 'py-2', 'px-4', 'rounded', 'hover:bg-blue-700');
+
+        // Adiciona evento de clique ao botão
+        button.onclick = () => {
+          const modal = document.getElementById('modal');
+          modal.classList.remove('hidden'); // Mostra o modal
+          setTimeout(() => {
+            modal.classList.add('show'); // Adiciona classe de animação após mostrar
+          }, 10);
+        };
+
+        item.appendChild(button);
+        container.appendChild(item);
+      });
+    }
+
+    // Função para fechar o modal
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.classList.remove('show'); // Remove a classe de animação
+      setTimeout(() => {
+        modal.classList.add('hidden'); // Esconde o modal após a animação
+      }, 300);
+    }
+
+    // Adiciona evento de clique ao botão de fechar
+    document.getElementById('close-modal').onclick = closeModal;
+
+    // Adiciona evento de clique ao botão de copiar
+    document.getElementById('copy-pix-key').addEventListener('click', () => {
+      const pixKeyInput = document.getElementById('pix-key-input');
+      pixKeyInput.select();
+      document.execCommand('copy');
+    
+      const copyIcon = document.getElementById('copy-icon');
+      const copyStatus = document.getElementById('copy-status');
+    
+      // Troca o ícone e mostra a mensagem de cópia
+      copyIcon.classList.remove('fa-copy');
+      copyIcon.classList.add('fa-check'); // Muda para ícone de "copiado"
+      copyStatus.classList.remove('hidden'); // Mostra a mensagem "Copiado!"
+
+      // Após 2 segundos, volta o ícone e esconde a mensagem
+      setTimeout(() => {
+        copyIcon.classList.remove('fa-check');
+        copyIcon.classList.add('fa-copy'); // Volta para o ícone de copiar
+        copyStatus.classList.add('hidden'); // Esconde a mensagem
+      }, 2000);
+    });
+
+    // Chama a função para renderizar os presentes quando a página carregar
+    window.onload = renderPresentes;
+
+
+  </script>
+</body>
+</html>
